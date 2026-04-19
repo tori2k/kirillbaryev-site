@@ -1,0 +1,37 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 32, class: className = '' } = Astro.props;
+---
+<svg
+  class={`logo ${className}`}
+  width={size}
+  height={size}
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="Кирилл Барыев"
+>
+  <!-- Premium KB monogram inside rounded ring -->
+  <circle cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1" opacity="0.35" />
+  <path
+    d="M14 13v22M14 24l9-11M14 24l10 11"
+    stroke="currentColor"
+    stroke-width="2.3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M28 13h6.5a4.5 4.5 0 014.5 4.5v0a4.5 4.5 0 01-4.5 4.5H28V13zM28 22h7.5a4.5 4.5 0 014.5 4.5v4a4.5 4.5 0 01-4.5 4.5H28V22z"
+    stroke="currentColor"
+    stroke-width="2.3"
+    stroke-linejoin="round"
+  />
+</svg>
+
+<style>
+  .logo { display: block; color: var(--text); transition: color 0.4s; }
+  .logo:hover { color: var(--accent); }
+</style>

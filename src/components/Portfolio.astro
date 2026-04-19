@@ -1,0 +1,609 @@
+---
+const cases = [
+  {
+    slug: 'manifik',
+    url: 'https://kb-manifik.surge.sh',
+    niche: 'Школа вокала',
+    title: 'Manifik',
+    desc: 'Флагманский проект. Полноценный лендинг школы вокала: 10 секций, команда из 5 педагогов, YClients-интеграция, SEO с schema.org, оптимизация видео (−55% веса). Работает на собственном домене.',
+    tags: ['Флагман', 'Premium', 'Light'],
+    featured: true,
+  },
+  {
+    slug: 'cosmetologist',
+    url: 'https://kb-cosmetologist.surge.sh',
+    niche: 'Косметолог',
+    title: 'Премиум эстетика',
+    desc: 'Нежная палитра, мягкие анимации, акцент на процедурах и результате. Формат для специалиста с премиум-чеком.',
+    tags: ['Lifestyle', 'Премиум', 'Light'],
+  },
+  {
+    slug: 'psychologist',
+    url: 'https://kb-psychologist.surge.sh',
+    niche: 'Психолог',
+    title: 'Пространство доверия',
+    desc: 'Serif-типографика, плавные переходы, акцент на подходе и результате. Конвертирует в первую встречу.',
+    tags: ['Экспертность', 'Serif', 'Light'],
+  },
+  {
+    slug: 'tutor',
+    url: 'https://kb-tutor.surge.sh',
+    niche: 'Репетитор',
+    title: 'Школа результатов',
+    desc: 'Смелая типографика, яркий hero, акцент на успехах учеников. Под конверсию родителей.',
+    tags: ['Bold', 'Образование', 'Dark'],
+  },
+  {
+    slug: 'nails',
+    url: 'https://kb-nails.surge.sh',
+    niche: 'Мастер маникюра',
+    title: 'Эстетика рук',
+    desc: 'Тактильный дизайн, галерея работ в фокусе, быстрая запись. Для beauty-мастера.',
+    tags: ['Beauty', 'Галерея', 'Light'],
+  },
+  {
+    slug: 'silverstandard',
+    url: 'https://kb-silverstandard.surge.sh',
+    niche: 'Услуга',
+    title: 'Серебряный Стандарт',
+    desc: 'B2B-лендинг для компании по очистке вентиляции. Доверие, сертификация, прайс.',
+    tags: ['B2B', 'Услуги', 'Dark'],
+  },
+  {
+    slug: 'fleshka',
+    url: 'https://kb-fleshka.surge.sh',
+    niche: 'Продукт',
+    title: 'FLESHKA',
+    desc: 'Продающий лендинг под физический товар — гаджет. Фишки, характеристики, покупка.',
+    tags: ['Product', 'E-com', 'Brand'],
+  },
+  {
+    slug: 'vaultkey',
+    url: 'https://kb-vaultkey.surge.sh',
+    niche: 'Продукт',
+    title: 'VAULTKEY',
+    desc: 'Холодный криптокошелёк. Технологичный тон, 3D-акценты, фокус на безопасности.',
+    tags: ['Crypto', 'Tech', 'Dark'],
+  },
+];
+---
+
+<section class="showcase" id="portfolio">
+  <!-- Вертикальная виртуальная длина: 7 экранов + 1 для плавного выхода -->
+  <div class="showcase__track" style={`--count: ${cases.length}`}>
+    <div class="showcase__pin">
+      <div class="showcase__inner">
+
+        <!-- LEFT: info panel -->
+        <aside class="showcase__info">
+          <div class="info__header reveal">
+            <div class="info__tag">
+              <span class="info__tag-line"></span>
+              Портфолио
+            </div>
+            <h2 class="info__heading">Витрина<br/>живых работ.</h2>
+            <p class="info__lead">Все 7 шаблонов — в эфире. Листай вниз, чтобы пройти по каждому. Понравился — возьму и адаптирую под тебя за 1 день.</p>
+          </div>
+
+          <div class="info__slides">
+            {cases.map((c, i) => (
+              <div class:list={['info__slide', c.featured && 'info__slide--featured']} data-index={i}>
+                <div class="info__niche">
+                  {c.niche}
+                  {c.featured && <span class="info__featured-badge">★ Флагман</span>}
+                </div>
+                <h3 class="info__title">{c.title}</h3>
+                <div class="info__tags">
+                  {c.tags.map(t => <span class="info__pill">{t}</span>)}
+                </div>
+                <p class="info__desc">{c.desc}</p>
+                <a href={c.url} target="_blank" rel="noopener" class="info__link">
+                  Открыть живой сайт
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <div class="info__footer">
+            <div class="info__counter">
+              <span id="case-counter-current">01</span>
+              <span class="info__counter-sep">/</span>
+              <span>{String(cases.length).padStart(2, '0')}</span>
+            </div>
+            <div class="info__progress">
+              {cases.map((_, i) => (
+                <span class="info__dot" data-index={i}></span>
+              ))}
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT: laptop mockup with live iframes -->
+        <div class="showcase__device reveal-right">
+          <div class="laptop">
+            <div class="laptop__frame">
+              <div class="laptop__chrome">
+                <div class="laptop__dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="laptop__url">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+                  <span id="case-url">kb-cosmetologist.surge.sh</span>
+                </div>
+                <div class="laptop__chrome-right"></div>
+              </div>
+              <div class="laptop__screen">
+                {cases.map((c, i) => (
+                  <iframe
+                    class:list={['laptop__iframe', i === 0 && 'active']}
+                    data-index={i}
+                    data-url={c.url.replace('https://', '')}
+                    data-src={c.url}
+                    src={i === 0 ? c.url : 'about:blank'}
+                    loading="lazy"
+                    title={c.title}
+                  ></iframe>
+                ))}
+              </div>
+            </div>
+            <div class="laptop__base">
+              <div class="laptop__notch"></div>
+            </div>
+          </div>
+
+          <!-- Scroll hint -->
+          <div class="scroll-hint" id="scroll-hint">
+            <div class="scroll-hint__mouse">
+              <span></span>
+            </div>
+            <span>Скролли</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    position: relative;
+    padding-top: 40px;
+  }
+  .showcase__track {
+    --count: 7;
+    height: calc(var(--count) * 100vh + 30vh);
+  }
+  .showcase__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .showcase__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 56px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  /* INFO */
+  .showcase__info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-height: 100vh;
+    padding: 100px 0 48px;
+  }
+  .info__tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .info__tag-line {
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .info__heading {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    margin-bottom: 18px;
+  }
+  .info__lead {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 400px;
+  }
+
+  /* Slides */
+  .info__slides {
+    position: relative;
+    flex: 1;
+    min-height: 240px;
+  }
+  .info__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s cubic-bezier(.25,.46,.45,.94), transform 0.55s cubic-bezier(.25,.46,.45,.94);
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .info__slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .info__niche {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .info__featured-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 18%, transparent);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  }
+  .info__title {
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .info__tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 2px;
+  }
+  .info__pill {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border-2);
+    color: var(--muted);
+  }
+  .info__desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 380px;
+  }
+  .info__link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+    margin-top: 8px;
+  }
+  .info__link:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  /* Footer */
+  .info__footer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .info__counter {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    gap: 6px;
+    color: var(--text);
+  }
+  .info__counter-sep { color: var(--muted-2); }
+  .info__counter span:last-child { color: var(--muted); }
+  .info__progress {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+  }
+  .info__dot {
+    flex: 1;
+    height: 2px;
+    background: var(--border-2);
+    border-radius: 999px;
+    transition: background 0.5s;
+  }
+  .info__dot.active {
+    background: var(--accent);
+  }
+
+  /* DEVICE */
+  .showcase__device {
+    position: relative;
+    width: 100%;
+    perspective: 1200px;
+  }
+  .laptop {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    transform: translateY(0);
+    transition: transform 0.8s cubic-bezier(.25,.46,.45,.94);
+  }
+  .laptop__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: linear-gradient(180deg, #1c1c1c, #0a0a0a);
+    border-radius: 18px 18px 4px 4px;
+    padding: 32px 14px 14px;
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.04),
+      0 40px 80px rgba(0,0,0,0.5),
+      0 0 100px color-mix(in oklab, var(--accent) 10%, transparent);
+    overflow: hidden;
+  }
+  [data-theme="cream"] .laptop__frame {
+    background: linear-gradient(180deg, #3a3128, #1f1914);
+  }
+
+  .laptop__chrome {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 32px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .laptop__dots { display: flex; gap: 6px; }
+  .laptop__dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #4a4a4a;
+  }
+  .laptop__dots span:nth-child(1) { background: #ff5f57; }
+  .laptop__dots span:nth-child(2) { background: #febc2e; }
+  .laptop__dots span:nth-child(3) { background: #28c840; }
+  .laptop__url {
+    flex: 1;
+    height: 20px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.3px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .laptop__url svg { opacity: 0.6; }
+  .laptop__chrome-right { width: 48px; }
+
+  .laptop__screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .laptop__iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 0.7s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94);
+    background: var(--bg);
+    pointer-events: none;
+  }
+  .laptop__iframe.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .laptop__base {
+    width: 110%;
+    height: 14px;
+    margin: -2px -5% 0;
+    background: linear-gradient(180deg, #151515, #0a0a0a);
+    border-radius: 0 0 12px 12px;
+    position: relative;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+  }
+  .laptop__notch {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 5px;
+    background: #0a0a0a;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: hintIn 0.6s 1.2s forwards;
+  }
+  .scroll-hint.hidden { opacity: 0 !important; }
+  @keyframes hintIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+  .scroll-hint__mouse {
+    width: 22px; height: 34px;
+    border: 1.5px solid var(--muted);
+    border-radius: 12px;
+    position: relative;
+  }
+  .scroll-hint__mouse span {
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 6px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: mouseScroll 1.8s ease-in-out infinite;
+  }
+  @keyframes mouseScroll {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    50% { transform: translateX(-50%) translateY(10px); opacity: 0.3; }
+  }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .showcase__inner {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 80px 20px 40px;
+      align-content: center;
+    }
+    .showcase__info {
+      max-height: none;
+      padding: 0;
+      gap: 18px;
+    }
+    .info__header { display: none; }
+    .info__slides { min-height: 180px; }
+    .info__heading { display: none; }
+    .info__lead { display: none; }
+    .info__title { font-size: 24px; }
+    .info__desc { font-size: 13px; max-width: 100%; }
+    .laptop { max-width: 100%; }
+    .laptop__frame { padding: 26px 8px 8px; }
+    .laptop__chrome { height: 26px; }
+    .scroll-hint { display: none; }
+    .showcase__track {
+      height: calc(var(--count) * 90vh + 20vh);
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('.showcase');
+  const track = section?.querySelector<HTMLElement>('.showcase__track');
+  const iframes = document.querySelectorAll<HTMLIFrameElement>('.laptop__iframe');
+  const slides = document.querySelectorAll<HTMLElement>('.info__slide');
+  const dots = document.querySelectorAll<HTMLElement>('.info__dot');
+  const counter = document.getElementById('case-counter-current');
+  const urlLabel = document.getElementById('case-url');
+  const hint = document.getElementById('scroll-hint');
+  const count = iframes.length;
+
+  if (!section || !track || count === 0) {
+    // no-op
+  } else {
+    let currentIndex = 0;
+    let hintHidden = false;
+
+    // Initial: first slide active
+    slides[0]?.classList.add('active');
+    dots[0]?.classList.add('active');
+
+    const ensureLoaded = (index: number) => {
+      const frame = iframes[index];
+      if (!frame) return;
+      const target = frame.dataset.src;
+      if (target && frame.src !== target) {
+        frame.src = target;
+      }
+    };
+
+    const setActive = (index: number) => {
+      if (index === currentIndex) return;
+      iframes[currentIndex]?.classList.remove('active');
+      slides[currentIndex]?.classList.remove('active');
+      dots[currentIndex]?.classList.remove('active');
+
+      currentIndex = index;
+
+      iframes[currentIndex]?.classList.add('active');
+      slides[currentIndex]?.classList.add('active');
+      dots[currentIndex]?.classList.add('active');
+
+      // Load current + one ahead, so next switch is instant
+      ensureLoaded(currentIndex);
+      ensureLoaded(currentIndex + 1);
+
+      if (counter) counter.textContent = String(currentIndex + 1).padStart(2, '0');
+      if (urlLabel) urlLabel.textContent = iframes[currentIndex]?.dataset.url || '';
+    };
+
+    // Preload the second case so the first transition is smooth
+    ensureLoaded(1);
+
+    const onScroll = () => {
+      const rect = track.getBoundingClientRect();
+      const scrollable = track.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+
+      // progress 0..1 inside the pinned track
+      const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+      const index = Math.min(count - 1, Math.floor(progress * count * 0.999));
+      setActive(index);
+
+      // Hide scroll hint after user starts
+      if (!hintHidden && progress > 0.02) {
+        hint?.classList.add('hidden');
+        hintHidden = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  }
+</script>

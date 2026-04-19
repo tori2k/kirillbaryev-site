@@ -1,0 +1,501 @@
+---
+const niches = [
+  { id: 'expert',   label: 'Эксперт',        hint: 'Психолог, коуч, репетитор…' },
+  { id: 'service',  label: 'Услуги',         hint: 'Салон, студия, школа…' },
+  { id: 'product',  label: 'Продукт',        hint: 'Физический товар или SaaS' },
+  { id: 'company',  label: 'Компания',       hint: 'B2B / агентство' },
+  { id: 'other',    label: 'Другое',         hint: 'Опишите в 2 словах' },
+];
+
+const styles = [
+  { id: 'minimal',  label: 'Минимализм',     hint: 'Чистый, спокойный' },
+  { id: 'premium',  label: 'Премиум',        hint: 'Serif, сдержанно' },
+  { id: 'bold',     label: 'Bold',           hint: 'Крупно, контрастно' },
+  { id: 'dark',     label: 'Dark',           hint: 'Тёмная тема' },
+  { id: 'brand',    label: 'Brand-driven',   hint: 'Под вашу айдентику' },
+];
+
+const sizes = [
+  { id: '5',        label: '5 секций',       price: 5000,  note: 'Лендинг-минимум' },
+  { id: '7',        label: '7 секций',       price: 7000,  note: 'Оптимальный объём' },
+  { id: '10',       label: '10+ секций',     price: 10000, note: 'Расширенный, или многостраничный' },
+];
+
+const speeds = [
+  { id: '1day',     label: '1 день',         discount: 0,    note: 'Срочный запуск' },
+  { id: '3days',    label: '3 дня',          discount: 10,   note: 'Чуть больше внимания к деталям' },
+  { id: 'week',     label: 'Неделя+',        discount: 20,   note: 'С полной проработкой' },
+];
+---
+<section class="cfg" id="configurator">
+  <div class="container-x">
+    <div class="cfg__head reveal">
+      <div class="cfg__tag"><span class="cfg__tag-line"></span>Конфигуратор</div>
+      <h2 class="cfg__heading">Собери свой сайт<br/><em>за пару кликов.</em></h2>
+      <p class="cfg__lead">Выбирай параметры — внизу появится готовое описание проекта и цена. По готовности — жми «Обсудить» и уходи ко мне в Telegram с уже сформулированным запросом.</p>
+    </div>
+
+    <div class="cfg__grid reveal">
+      <div class="cfg__form">
+        <!-- STEP 1: Niche -->
+        <div class="step" data-step="1">
+          <div class="step__head">
+            <div class="step__num">01</div>
+            <h3 class="step__title">Тип проекта</h3>
+          </div>
+          <div class="step__options">
+            {niches.map(n => (
+              <button type="button" class="opt" data-group="niche" data-value={n.id} data-label={n.label}>
+                <span class="opt__label">{n.label}</span>
+                <span class="opt__hint">{n.hint}</span>
+              </button>
+            ))}
+          </div>
+          <input type="text" class="cfg__custom" id="niche-custom" placeholder="Опишите вашу нишу" hidden />
+        </div>
+
+        <!-- STEP 2: Style -->
+        <div class="step" data-step="2">
+          <div class="step__head">
+            <div class="step__num">02</div>
+            <h3 class="step__title">Стиль</h3>
+          </div>
+          <div class="step__options">
+            {styles.map(s => (
+              <button type="button" class="opt" data-group="style" data-value={s.id} data-label={s.label}>
+                <span class="opt__label">{s.label}</span>
+                <span class="opt__hint">{s.hint}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- STEP 3: Size -->
+        <div class="step" data-step="3">
+          <div class="step__head">
+            <div class="step__num">03</div>
+            <h3 class="step__title">Объём</h3>
+          </div>
+          <div class="step__options">
+            {sizes.map(s => (
+              <button type="button" class="opt opt--size"
+                data-group="size"
+                data-value={s.id}
+                data-label={s.label}
+                data-price={s.price}>
+                <span class="opt__label">{s.label}</span>
+                <span class="opt__hint">{s.note}</span>
+                <span class="opt__price">от {s.price.toLocaleString('ru-RU')} ₽</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- STEP 4: Speed -->
+        <div class="step" data-step="4">
+          <div class="step__head">
+            <div class="step__num">04</div>
+            <h3 class="step__title">Срок</h3>
+          </div>
+          <div class="step__options">
+            {speeds.map(s => (
+              <button type="button" class="opt"
+                data-group="speed"
+                data-value={s.id}
+                data-label={s.label}
+                data-discount={s.discount}>
+                <span class="opt__label">{s.label}</span>
+                <span class="opt__hint">{s.note}{s.discount > 0 ? ` · −${s.discount}%` : ''}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE SUMMARY -->
+      <aside class="cfg__summary">
+        <div class="summary__sticky">
+          <div class="summary__label">Ваш проект</div>
+          <ul class="summary__list" id="cfg-summary">
+            <li class="summary__empty">Начните собирать слева →</li>
+          </ul>
+
+          <div class="summary__price" id="cfg-price">
+            <span class="summary__price-label">Цена</span>
+            <span class="summary__price-value">—</span>
+          </div>
+
+          <a href="#" class="summary__cta" id="cfg-cta" aria-disabled="true">
+            Обсудить проект
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <p class="summary__note">10+ секций или многостраничный — по договорённости. Цена итоговая, без скрытых платежей.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cfg { padding: 120px 0 140px; position: relative; }
+  .cfg__head { max-width: 720px; margin-bottom: 60px; }
+  .cfg__tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .cfg__tag-line { width: 24px; height: 1px; background: var(--accent); }
+  .cfg__heading {
+    font-size: clamp(38px, 5vw, 68px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 22px;
+  }
+  .cfg__heading em {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .cfg__lead {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  .cfg__grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .cfg__form {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .step__head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .step__num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--muted-2);
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+  .step__title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .step__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .opt {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 18px 16px;
+    border-radius: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  }
+  .opt:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  }
+  .opt.active {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 8%, var(--bg-card));
+  }
+  .opt__label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .opt__hint {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .opt__price {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+
+  .cfg__custom {
+    margin-top: 14px;
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .cfg__custom:focus {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 5%, var(--bg-card));
+  }
+
+  /* SUMMARY */
+  .cfg__summary { position: relative; }
+  .summary__sticky {
+    position: sticky;
+    top: 100px;
+    padding: 32px 28px;
+    border-radius: 22px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-2);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .summary__label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .summary__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .summary__list li {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    padding-left: 18px;
+    position: relative;
+  }
+  .summary__list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .summary__empty {
+    color: var(--muted-2) !important;
+    font-style: italic;
+  }
+  .summary__empty::before { display: none !important; }
+  .summary__empty { padding-left: 0 !important; }
+
+  .summary__price {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .summary__price-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .summary__price-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .summary__price-value.empty { color: var(--muted-2); font-size: 20px; }
+
+  .summary__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 24px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+    box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+  .summary__cta[aria-disabled="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .summary__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px color-mix(in oklab, var(--accent) 50%, transparent);
+  }
+
+  .summary__note {
+    font-size: 11px;
+    color: var(--muted-2);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  @media (max-width: 1000px) {
+    .cfg__grid { grid-template-columns: 1fr; gap: 32px; }
+    .summary__sticky { position: relative; top: auto; }
+    .cfg { padding: 80px 0 100px; }
+  }
+  @media (max-width: 600px) {
+    .step__options { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLElement>('.cfg__form');
+  const summaryList = document.getElementById('cfg-summary');
+  const priceValue = document.querySelector<HTMLElement>('.summary__price-value');
+  const cta = document.getElementById('cfg-cta') as HTMLAnchorElement | null;
+  const customInput = document.getElementById('niche-custom') as HTMLInputElement | null;
+
+  const state: Record<string, { value: string; label: string; price?: number; discount?: number }> = {};
+
+  const labels: Record<string, string> = {
+    niche: 'Ниша',
+    style: 'Стиль',
+    size: 'Объём',
+    speed: 'Срок',
+  };
+
+  const nicheLabelMap: Record<string, string> = {
+    expert:  'сайта эксперту',
+    service: 'под услуги',
+    product: 'под продукт',
+    company: 'для компании',
+    other:   'на заказ',
+  };
+
+  function formatPrice(n: number) {
+    return n.toLocaleString('ru-RU') + ' ₽';
+  }
+
+  function computePrice() {
+    const sizeEntry = state.size;
+    if (!sizeEntry || !sizeEntry.price) return null;
+    const discount = state.speed?.discount ?? 0;
+    const base = sizeEntry.price;
+    return Math.round(base * (1 - discount / 100));
+  }
+
+  function isComplete() {
+    return ['niche', 'style', 'size', 'speed'].every(k => state[k]);
+  }
+
+  function render() {
+    if (!summaryList || !priceValue || !cta) return;
+
+    const entries = Object.entries(state);
+    if (entries.length === 0) {
+      summaryList.innerHTML = '<li class="summary__empty">Начните собирать слева →</li>';
+    } else {
+      summaryList.innerHTML = entries
+        .map(([k, v]) => {
+          let displayLabel = v.label;
+          if (k === 'niche' && v.value === 'other' && customInput?.value.trim()) {
+            displayLabel = 'Другое — ' + customInput.value.trim();
+          }
+          return `<li><b>${labels[k]}:</b> ${displayLabel}</li>`;
+        })
+        .join('');
+    }
+
+    const price = computePrice();
+    if (price == null) {
+      priceValue.textContent = '—';
+      priceValue.classList.add('empty');
+    } else {
+      priceValue.textContent = state.size?.value === '10' ? 'от ' + formatPrice(price) : formatPrice(price);
+      priceValue.classList.remove('empty');
+    }
+
+    if (isComplete()) {
+      cta.setAttribute('aria-disabled', 'false');
+      cta.setAttribute('target', '_blank');
+      cta.setAttribute('rel', 'noopener');
+      const msg = buildTelegramMessage();
+      cta.href = `https://t.me/tori2k?text=${encodeURIComponent(msg)}`;
+    } else {
+      cta.setAttribute('aria-disabled', 'true');
+      cta.removeAttribute('href');
+    }
+  }
+
+  function buildTelegramMessage() {
+    const price = computePrice();
+    const nicheText = state.niche?.value === 'other' && customInput?.value.trim()
+      ? customInput.value.trim()
+      : state.niche?.label;
+    const lines = [
+      'Привет, Кирилл! Собрал на сайте:',
+      `• Ниша: ${nicheText}`,
+      `• Стиль: ${state.style?.label}`,
+      `• Объём: ${state.size?.label}`,
+      `• Срок: ${state.speed?.label}`,
+      price != null ? `• Цена: ${state.size?.value === '10' ? 'от ' : ''}${formatPrice(price)}` : '',
+      '',
+      'Можем обсудить?',
+    ].filter(Boolean);
+    return lines.join('\n');
+  }
+
+  form?.querySelectorAll<HTMLButtonElement>('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.dataset.group!;
+      const siblings = form.querySelectorAll<HTMLButtonElement>(`.opt[data-group="${group}"]`);
+      siblings.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+
+      state[group] = {
+        value: btn.dataset.value!,
+        label: btn.dataset.label!,
+        price: btn.dataset.price ? Number(btn.dataset.price) : undefined,
+        discount: btn.dataset.discount ? Number(btn.dataset.discount) : undefined,
+      };
+
+      // Toggle custom niche input
+      if (group === 'niche' && customInput) {
+        if (btn.dataset.value === 'other') {
+          customInput.hidden = false;
+          customInput.focus();
+        } else {
+          customInput.hidden = true;
+          customInput.value = '';
+        }
+      }
+
+      render();
+    });
+  });
+
+  customInput?.addEventListener('input', render);
+</script>

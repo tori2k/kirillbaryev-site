@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Cursor from '../components/Cursor.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import Portfolio from '../components/Portfolio.astro';
+import Configurator from '../components/Configurator.astro';
+---
+<Layout>
+  <Cursor />
+  <Nav />
+  <Hero />
+  <Marquee />
+  <Portfolio />
+  <Configurator />
+
+  <!-- Sections coming in next stages: About, Guarantees, FAQ, Comparison, CTA -->
+
+  <footer class="footer">
+    <div class="container-x footer__inner">
+      <span>© 2026 Кирилл Барыев</span>
+      <span>Сайты для экспертов · Москва</span>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    margin-top: 120px;
+    color: var(--muted-2);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  @media (max-width: 700px) {
+    .footer__inner { flex-direction: column; gap: 10px; text-align: center; }
+  }
+</style>
+
+<script>
+  // Global reveal observer
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el) => obs.observe(el));
+</script>
