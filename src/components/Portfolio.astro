@@ -119,7 +119,7 @@ const cases = [
           </div>
         </aside>
 
-        <!-- RIGHT: laptop mockup with live iframes -->
+        <!-- RIGHT: laptop mockup with screenshots -->
         <div class="showcase__device reveal-right">
           <div class="laptop">
             <div class="laptop__frame">
@@ -135,15 +135,24 @@ const cases = [
               </div>
               <div class="laptop__screen">
                 {cases.map((c, i) => (
-                  <iframe
-                    class:list={['laptop__iframe', i === 0 && 'active']}
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener"
+                    class:list={['laptop__shot', i === 0 && 'active']}
                     data-index={i}
                     data-url={c.url.replace('https://', '')}
-                    data-src={c.url}
-                    src={i === 0 ? c.url : 'about:blank'}
-                    loading="lazy"
-                    title={c.title}
-                  ></iframe>
+                    aria-label={`Открыть ${c.title}`}
+                  >
+                    <img
+                      src={`/screenshots/${c.slug}.jpg`}
+                      alt={c.title}
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      width="1440"
+                      height="900"
+                    />
+                  </a>
                 ))}
               </div>
             </div>
@@ -425,19 +434,25 @@ const cases = [
     border-radius: 6px;
     overflow: hidden;
   }
-  .laptop__iframe {
+  .laptop__shot {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
+    display: block;
     opacity: 0;
     transform: scale(1.02);
     transition: opacity 0.7s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94);
     background: var(--bg);
     pointer-events: none;
+    cursor: pointer;
   }
-  .laptop__iframe.active {
+  .laptop__shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+  .laptop__shot.active {
     opacity: 1;
     transform: scale(1);
     pointer-events: auto;
@@ -544,13 +559,13 @@ const cases = [
 <script>
   const section = document.querySelector<HTMLElement>('.showcase');
   const track = section?.querySelector<HTMLElement>('.showcase__track');
-  const iframes = document.querySelectorAll<HTMLIFrameElement>('.laptop__iframe');
+  const shots = document.querySelectorAll<HTMLAnchorElement>('.laptop__shot');
   const slides = document.querySelectorAll<HTMLElement>('.info__slide');
   const dots = document.querySelectorAll<HTMLElement>('.info__dot');
   const counter = document.getElementById('case-counter-current');
   const urlLabel = document.getElementById('case-url');
   const hint = document.getElementById('scroll-hint');
-  const count = iframes.length;
+  const count = shots.length;
 
   if (!section || !track || count === 0) {
     // no-op
@@ -562,37 +577,21 @@ const cases = [
     slides[0]?.classList.add('active');
     dots[0]?.classList.add('active');
 
-    const ensureLoaded = (index: number) => {
-      const frame = iframes[index];
-      if (!frame) return;
-      const target = frame.dataset.src;
-      if (target && frame.src !== target) {
-        frame.src = target;
-      }
-    };
-
     const setActive = (index: number) => {
       if (index === currentIndex) return;
-      iframes[currentIndex]?.classList.remove('active');
+      shots[currentIndex]?.classList.remove('active');
       slides[currentIndex]?.classList.remove('active');
       dots[currentIndex]?.classList.remove('active');
 
       currentIndex = index;
 
-      iframes[currentIndex]?.classList.add('active');
+      shots[currentIndex]?.classList.add('active');
       slides[currentIndex]?.classList.add('active');
       dots[currentIndex]?.classList.add('active');
 
-      // Load current + one ahead, so next switch is instant
-      ensureLoaded(currentIndex);
-      ensureLoaded(currentIndex + 1);
-
       if (counter) counter.textContent = String(currentIndex + 1).padStart(2, '0');
-      if (urlLabel) urlLabel.textContent = iframes[currentIndex]?.dataset.url || '';
+      if (urlLabel) urlLabel.textContent = shots[currentIndex]?.dataset.url || '';
     };
-
-    // Preload the second case so the first transition is smooth
-    ensureLoaded(1);
 
     const onScroll = () => {
       const rect = track.getBoundingClientRect();
